@@ -7,7 +7,7 @@
     </p>
     <p>
       For the frontend code of this project, visit
-      <a href="http://github.com/Stype0912/fe-learning" target="_blank" rel="noopener">frontend repo</a>.
+      <a href="https://github.com/Stype0912/fe-dcandid" target="_blank" rel="noopener">frontend repo</a>.
     </p>
     <p>
       For the origin framework of this project, visit
