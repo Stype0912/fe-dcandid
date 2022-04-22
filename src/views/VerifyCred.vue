@@ -1,7 +1,7 @@
 <template>
-  <div class="user">
+  <div class="verifier">
     <div>
-      <h1 class="title">Login</h1>
+      <h1 class="title">Verify</h1>
     </div>
     <hr>
     <div>
@@ -17,8 +17,7 @@
               </div>
               <br>
               <div>
-                <b-button variant="primary" v-on:click="masterCred()">获取MasterCred</b-button>&nbsp;
-                <b-button variant="primary" v-on:click="ctxCred()">获取ContextCred</b-button>
+                <b-button variant="primary" v-on:click="verifyCred()">校验Cred</b-button>
               </div>
             </form>
           </b-col>
@@ -28,16 +27,12 @@
         <b-row class="text-center">
           <b-col cols="2" class="text-center"></b-col>
           <b-col class="text-center">
-            <label class="label" v-if="ctx">Context:&nbsp;{{ ctx }}</label>
-            <label class="label" v-show="claim">Claim:&nbsp;{{ claim }}</label>
-            <label class="label" v-if="proof">Proof:&nbsp;{{ proof }}</label>
+            <label class="label" v-if="IsValid">IsValid:&nbsp;{{ IsValid }}</label>
           </b-col>
           <b-col cols="2" class="text-center"></b-col>
         </b-row>
       </b-container>
     </div>
-
-
   </div>
 </template>
 
@@ -45,16 +40,16 @@
 import axios from 'axios';
 
 export default {
-  name: 'UserLogin',
+  name: 'VerifyCred',
 
   data: function () {
     return {
-      userId: "", pkU: "", claim: "", signature: "", ctx: "", proof: ""
+      userId: "", IsValid: ""
     }
   },
 
   methods: {
-    masterCred: function () {
+    verifyCred: function () {
       var data = {"id": this.userId}
 
       /*eslint-disable*/
@@ -63,39 +58,11 @@ export default {
 
       axios({
         method: "POST",
-        url: "http://127.0.0.1:7890/master-cred",
+        url: "http://127.0.0.1:7890/verify",
         data: data,
         headers: {"content-type": "text/plain"},
       }).then(result => {
-        this.pkU = result.data['pk_u']
-        this.claim = result.data['claim']
-        this.signature = result.data['signature']
-
-        /*eslint-disable*/
-        console.log(result.data)
-        /*eslint-enable*/
-      }).catch(error => {
-        /*eslint-disable*/
-        console.error(error);
-        /*eslint-enable*/
-      })
-    },
-    ctxCred: function () {
-      var data = {"id": this.userId}
-
-      /*eslint-disable*/
-      console.log(data)
-      /*eslint-enable*/
-
-      axios({
-        method: "POST",
-        url: "http://127.0.0.1:7890/ctx-cred",
-        data: data,
-        headers: {"content-type": "text/plain"},
-      }).then(result => {
-        this.ctx = result.data['ctx']
-        this.claim = result.data['claim']
-        this.proof = result.data['proof']
+        this.IsValid = result.data['is_valid']
 
         /*eslint-disable*/
         console.log(result.data)
