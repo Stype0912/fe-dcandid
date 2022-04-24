@@ -29,8 +29,10 @@
           <b-col cols="2" class="text-center"></b-col>
           <b-col class="text-center">
             <label class="label" v-if="ctx">Context:&nbsp;{{ ctx }}</label>
+            <label class="label" v-if="pkU">PkU:&nbsp;{{ pkU }}</label>
             <label class="label" v-show="claim">Claim:&nbsp;{{ claim }}</label>
             <label class="label" v-if="proof">Proof:&nbsp;{{ proof }}</label>
+            <label class="label" v-if="signature">Signature:&nbsp;{{ signature }}</label>
           </b-col>
           <b-col cols="2" class="text-center"></b-col>
         </b-row>
@@ -67,6 +69,8 @@ export default {
         data: data,
         headers: {"content-type": "text/plain"},
       }).then(result => {
+        this.proof = ''
+        this.ctx = result.data['ctx']
         this.pkU = result.data['pk_u']
         this.claim = result.data['claim']
         this.signature = result.data['signature']
@@ -96,6 +100,7 @@ export default {
         this.ctx = result.data['ctx']
         this.claim = result.data['claim']
         this.proof = result.data['proof']
+        this.signature = ''
 
         /*eslint-disable*/
         console.log(result.data)
