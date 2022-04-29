@@ -11,7 +11,7 @@
           <b-col class="text-center">
             <form>
               <div class="field">
-                <label class="label">用户ID</label>
+                <label class="label">用户ID/凭证ID</label>
                 <b-form-input name="userName" v-model="userId" class="input"
                               type="text" placeholder="输入ID"></b-form-input>
               </div>
@@ -28,9 +28,10 @@
         <b-row class="text-center">
           <b-col cols="2" class="text-center"></b-col>
           <b-col class="text-center">
+            <label class="label" v-if="credId">Credential Id:&nbsp;{{ credId }}</label>
             <label class="label" v-if="ctx">Context:&nbsp;{{ ctx }}</label>
             <label class="label" v-if="pkU">PkU:&nbsp;{{ pkU }}</label>
-            <label class="label" v-show="claim">Claim:&nbsp;{{ claim }}</label>
+            <label class="label" v-if="claim">Claim:&nbsp;{{ claim }}</label>
             <label class="label" v-if="proof">Proof:&nbsp;{{ proof }}</label>
             <label class="label" v-if="signature">Signature:&nbsp;{{ signature }}</label>
           </b-col>
@@ -51,7 +52,7 @@ export default {
 
   data: function () {
     return {
-      userId: "", pkU: "", claim: "", signature: "", ctx: "", proof: ""
+      userId: "", pkU: "", claim: "", signature: "", ctx: "", proof: "", credId: "",
     }
   },
 
@@ -70,6 +71,7 @@ export default {
         headers: {"content-type": "text/plain"},
       }).then(result => {
         this.proof = ''
+        this.credId = result.data['id']
         this.ctx = result.data['ctx']
         this.pkU = result.data['pk_u']
         this.claim = result.data['claim']
@@ -97,6 +99,7 @@ export default {
         data: data,
         headers: {"content-type": "text/plain"},
       }).then(result => {
+        this.credId = result.data['id']
         this.ctx = result.data['ctx']
         this.claim = result.data['claim']
         this.proof = result.data['proof']
@@ -139,5 +142,6 @@ a {
   word-break: break-all;
   white-space: normal;
   text-align: center;
+  display: block;
 }
 </style>

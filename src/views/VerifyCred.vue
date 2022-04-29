@@ -11,8 +11,8 @@
           <b-col class="text-center">
             <form>
               <div class="field">
-                <label class="label">用户ID</label>
-                <b-form-input name="userName" v-model="userId" class="input"
+                <label class="label">凭证ID</label>
+                <b-form-input name="userName" v-model="credId" class="input"
                               type="text" placeholder="输入ID"></b-form-input>
               </div>
               <br>
@@ -44,13 +44,13 @@ export default {
 
   data: function () {
     return {
-      userId: "", IsValid: ""
+      credId: "", IsValid: ""
     }
   },
 
   methods: {
     verifyCred: function () {
-      var data = {"id": this.userId}
+      var data = {"id": this.credId}
 
       /*eslint-disable*/
       console.log(data)
